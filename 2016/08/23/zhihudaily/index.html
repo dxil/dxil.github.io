@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dxl的博客">
+    <meta name="keyword"  content="Dxl博客 丁玺霖">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Vue+Vue-router知乎日报总结  - Dxl的博客 | Dxl&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://dxilin.github.io/2016/08/23/zhihudaily/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">dxl&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://dxilin.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('wallhaven-113384.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Vue" title="Vue">Vue</a>
+                        
+                    </div>
+                    <h1>Vue+Vue-router知乎日报总结 </h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by dxl on
+                        2016-08-23
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p>很久之前就听基友在吐槽，Vue比React好用太多太多啦之类的（直到现在还深陷在react中不能自拔，哈哈哈），就是他那番话，搞的我心痒痒，所以有了想学Vue的打算，拿着从掘金上扒下来的一篇关于利用Vue+Vue-router构建知乎日报的文章，然后就开始了一个礼拜（除了吃饭睡觉就是在码代码，要哭）的疯狂之旅。</p>
+<p>关于如何学习Vue，楼上有一篇<a href="">Vue60分钟入门</a>，那是我已经做完项目后才看到别人发的一篇挺不错的文章，也是可惜之前没有看到，不过前端的学习在于不断的挖坑，跳坑，和出坑，然后弃坑再找坑的死循环过程，所以我那时也是放着室友的大腿不抱（事实是他也被React缠的不行，不忍打扰），开始自己在<a href="http://cn.vuejs.org/" target="_blank" rel="external">Vue官方文档</a>上开始痛苦的自己摸索，不得不赞，这个文档真的非常详细也非常Nice，所以，就这样，一步步开始了这次构建知乎日报之旅。</p>
+<p><a href="https://github.com/dxil/zhihudaily" target="_blank" rel="external">项目源码戳我哦</a></p>
+<p><img src="zhihu.gif" alt="zhihu"></p>
+<p><img src="me.png" alt="me"></p>
+<h2 id="introduction"><a href="#introduction" class="headerlink" title="introduction"></a>introduction</h2><p>基础Vue的学习就不提了，先来谈谈这个项目中最关键的一个环节<a href="http://router.vuejs.org/" target="_blank" rel="external">Vue-router</a>，它是Vue.js 官方的路由。与 Vue.js 内核深度整合，能让构建单页应用易如反掌，下面贴出这个项目里所用到的路由。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> router = <span class="keyword">new</span> VueRouter()</div><div class="line"><span class="comment">// 定义路由规则</span></div><div class="line"><span class="comment">// 每条路由规则应该映射到一个组件。这里的“组件”可以是一个使用 Vue.extend</span></div><div class="line"><span class="comment">// 创建的组件构造函数，也可以是一个组件选项对象。</span></div><div class="line"></div><div class="line">router.map(&#123;</div><div class="line">  <span class="string">'/'</span>: &#123;</div><div class="line">    component: home,</div><div class="line">    subRoutes: &#123;</div><div class="line">      <span class="string">'/'</span>: &#123;</div><div class="line">        component: homeDefault</div><div class="line">      &#125;,</div><div class="line">      <span class="string">'/theme/:id'</span>: &#123;</div><div class="line">        name: <span class="string">'theme'</span>,</div><div class="line">        component: homeTheme</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="string">'/dingxl/:id'</span>: &#123;</div><div class="line">    name: <span class="string">'dingxl'</span>,</div><div class="line">    component: dingxl</div><div class="line">  &#125;,</div><div class="line">  <span class="string">'/detail/:id'</span>: &#123;</div><div class="line">    name: <span class="string">'detail'</span>,</div><div class="line">    component: detail</div><div class="line">  &#125;,</div><div class="line">  <span class="string">'/comments'</span>: &#123;</div><div class="line">    component: comments</div><div class="line">  &#125;,</div><div class="line">  <span class="string">'/recommender'</span>: &#123;</div><div class="line">    component: recommender</div><div class="line">  &#125;,</div><div class="line">  <span class="string">'/section'</span>: &#123;</div><div class="line">    component: section</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><p>对于View层的话用到了这么几个大组件：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">组件</th>
+<th style="text-align:center">作用</th>
+<th style="text-align:center">存在路由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">home</td>
+<td style="text-align:center">包含首页导航栏+侧边栏的组件</td>
+<td style="text-align:center">/</td>
+</tr>
+<tr>
+<td style="text-align:center">detail</td>
+<td style="text-align:center">每篇日报的详细排版包含头部，推荐者及话题的合集组件</td>
+<td style="text-align:center">/detail/:id</td>
+</tr>
+<tr>
+<td style="text-align:center">comments</td>
+<td style="text-align:center">每篇日报的评论组件（头，长评+短评）</td>
+<td style="text-align:center">/comments</td>
+</tr>
+<tr>
+<td style="text-align:center">recommender</td>
+<td style="text-align:center">一些特定日报的推荐者组件</td>
+<td style="text-align:center">/recommender</td>
+</tr>
+<tr>
+<td style="text-align:center">section</td>
+<td style="text-align:center">共同话题的合集</td>
+<td style="text-align:center">/section</td>
+</tr>
+<tr>
+<td style="text-align:center">dingxl</td>
+<td style="text-align:center">帅哥组件</td>
+<td style="text-align:center">/dingxl/:id</td>
+</tr>
+</tbody>
+</table>
+<p>而小组件componets中：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">组件</th>
+<th style="text-align:center">作用</th>
+<th style="text-align:center">父组件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">home-header</td>
+<td style="text-align:center">首页导航栏</td>
+<td style="text-align:center">home</td>
+</tr>
+<tr>
+<td style="text-align:center">sidebar</td>
+<td style="text-align:center">侧边栏组件</td>
+<td style="text-align:center">home</td>
+</tr>
+<tr>
+<td style="text-align:center">home-default</td>
+<td style="text-align:center">根路径下包含知乎日报列表的大组件</td>
+<td style="text-align:center">存在于根路径</td>
+</tr>
+<tr>
+<td style="text-align:center">slider</td>
+<td style="text-align:center">首页轮播图组件</td>
+<td style="text-align:center">home-default</td>
+</tr>
+<tr>
+<td style="text-align:center">home-theme</td>
+<td style="text-align:center">侧边栏中每个主题栏的组件</td>
+<td style="text-align:center">/theme/:id路由下</td>
+</tr>
+<tr>
+<td style="text-align:center">list-comp</td>
+<td style="text-align:center">很多组件都喜欢的一个复用小组件，用于控制每个知乎日报小列表</td>
+<td style="text-align:center">home-default、home-theme、section</td>
+</tr>
+<tr>
+<td style="text-align:center">detail-header</td>
+<td style="text-align:center">每篇日报页面的导航栏</td>
+<td style="text-align:center">detail</td>
+</tr>
+<tr>
+<td style="text-align:center">detail-content</td>
+<td style="text-align:center">每篇日报的内容</td>
+<td style="text-align:center">detail</td>
+</tr>
+<tr>
+<td style="text-align:center">comments-comp</td>
+<td style="text-align:center">日报的评论列表</td>
+<td style="text-align:center">comments</td>
+</tr>
+</tbody>
+</table>
+<p>在这里我们只看其中一个大组件（其他组件其实也是一样的思路）:</p>
+<h2 id="home"><a href="#home" class="headerlink" title="home"></a>home</h2><p>home.vue中包含两个组件 首页的头组件<code>homeheader</code>以及点击首页按钮后出现的侧边栏组件<code>sidebar</code>包含夜间模式功能</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">  &lt;div class="main-list" id="foo"&gt;</div><div class="line">    &lt;home-header :show-sidebar.sync="showSidebar" :title="title" :tip="tip" :icon-display="iconDisplay"&gt;&lt;/home-header&gt;</div><div class="line">    &lt;!-- 侧边栏 --&gt;</div><div class="line">    &lt;side-bar :show-sidebar.sync="showSidebar" :tip.sync="tip"&gt;&lt;/side-bar&gt;</div><div class="line"></div><div class="line">    &lt;!-- 侧边栏遮罩层 --&gt;</div><div class="line">    &lt;div v-if="showSidebar" class="sidebar-mask" @click="hiddenBar"&gt; &lt;/div&gt;</div><div class="line"></div><div class="line">    &lt;!-- 页面子路由 --&gt;</div><div class="line">    &lt;router-view&gt;&lt;/router-view&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/template&gt;</div></pre></td></tr></table></figure>
+<h5 id="home中的数据"><a href="#home中的数据" class="headerlink" title="home中的数据"></a>home中的数据</h5><p>提供是否控制侧边栏显示的<code>showSidebar:false</code>并且设置为<code>sync</code>属性，实现双向绑定（无论在首页中点击侧边栏按钮 或是在侧边栏中点击首页按钮，都能达到切换的目的）</p>
+<p><code>tip</code>:当滑动日报列表时 首页上方的<code>title</code>将隐藏，改为<code>tip</code>显示当前你看的日报是哪个日期，并且这个数据也能双向绑定，主要设置在<code>homeDefault</code>中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">data () &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      loading: <span class="literal">false</span>,</div><div class="line">      showSidebar: <span class="literal">false</span>,</div><div class="line">      tip: <span class="string">''</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h5 id="home中的方法"><a href="#home中的方法" class="headerlink" title="home中的方法"></a>home中的方法</h5><p><code>home</code>中主要有两个方法<code>showBar</code>和<code>hiddenBar</code>并且每当使用这个方法时将会改变首页是否允许滚动。</p>
+<p><code>homeheader</code>组件中则是头部的相关布局样式，也有<code>showBar</code>方法</p>
+<p><code>sidebar</code>组件则负责侧边栏的布局，样式方面没有什么说的，主要这里用到了<code>vue</code>的插件<a href="https://github.com/vuejs/vue-resource" target="_blank" rel="external">vue.resource</a>通过 XMLHttpRequest 或 JSONP 发起请求并处理响应，去向知乎日报爬取数据。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">showBar () &#123;</div><div class="line">      <span class="built_in">window</span>.document.body.classList.add = <span class="string">'scoll-stop'</span></div><div class="line">      <span class="built_in">window</span>.document.querySelector(<span class="string">'html'</span>).classList.add = <span class="string">'scoll-stop'</span></div><div class="line">      <span class="keyword">this</span>.showSidebar = !<span class="keyword">this</span>.showSidebar</div><div class="line">    &#125;,</div><div class="line">hiddenBar () &#123;</div><div class="line">      <span class="built_in">window</span>.document.body.className = <span class="string">''</span></div><div class="line">      <span class="built_in">window</span>.document.querySelector(<span class="string">'html'</span>).className = <span class="string">''</span></div><div class="line">      <span class="keyword">this</span>.showSidebar = !<span class="keyword">this</span>.showSidebar</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="homeDefault"><a href="#homeDefault" class="headerlink" title="homeDefault"></a>homeDefault</h2><p><code>homeDefault</code>控制轮播图以及首页数据层的展现，其中包含一个轮播图组件<code>slider</code>以及列表中的小组件<code>list-comp</code>（每篇文章当作一个组件方便管理）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;!--首页的列表--&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></div><div class="line">  <span class="comment">&lt;!--轮播组件--&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">slider</span> <span class="attr">:top_stories</span>=<span class="string">"topStories"</span> <span class="attr">v-cloak</span>&gt;</span><span class="tag">&lt;/<span class="name">slider</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!--列表--&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"list-box s-&#123;&#123;* date&#125;&#125;"</span> <span class="attr">v-for</span>=<span class="string">"item in allStories"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>&#123;&#123;item.date | dateTime&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">list-comp</span> <span class="attr">v-for</span>=<span class="string">"subItem in item.stories"</span> <span class="attr">:item</span>=<span class="string">"subItem"</span>&gt;</span><span class="tag">&lt;/<span class="name">list-comp</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<h5 id="homeDefault中的数据"><a href="#homeDefault中的数据" class="headerlink" title="homeDefault中的数据"></a>homeDefault中的数据</h5><p>大多是从知乎中获取的列表数据，不过也包含了一些自己的东西，比如<code>loading</code>用来控制当用户把当前页面的日报看完了，继续下滑时，向知乎继续发送请求获取之前的数据，以及<code>titleTip</code>用于发送给home中调用<code>changeTitle</code>改变头部的title，而<code>topStories</code>以及<code>allStories</code>、<code>date</code>等等，则是储存数据和时间等</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">data () &#123;</div><div class="line">      <span class="keyword">return</span> &#123;</div><div class="line">        topStories: [],</div><div class="line">        allStories: [],</div><div class="line">        date: <span class="string">''</span>,</div><div class="line">        loading: <span class="literal">false</span>,</div><div class="line">        dateArr: [],</div><div class="line">        titleTip: <span class="string">''</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="路由跳转控制scollTop"><a href="#路由跳转控制scollTop" class="headerlink" title="路由跳转控制scollTop"></a>路由跳转控制scollTop</h5><p>这也是其中比较重要的一部分，因为当你从首页点进一篇文章中的时候，将跳转进另一个路由结点，当你返回首页时，作为用户，肯定是想回到之前你所看到的那篇日报的位置，这样好继续往下阅览，所以你需要控制路由中的transition来判断路由是否变化，以及调用相应的方法，并且在其中设置了两个监听事件，来触发获取滑动高度和改变头部提示的事件，在<code>deactivate</code>注销路由时会撤销监听。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">route: &#123;</div><div class="line">      data (transition) &#123;</div><div class="line">        <span class="keyword">var</span> _this = <span class="keyword">this</span></div><div class="line">        <span class="keyword">if</span> (transition.from.name === <span class="string">'detail'</span>) &#123;</div><div class="line">          _this.$nextTick(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">window</span>.document.body.scrollTop = <span class="built_in">window</span>.sessionStorage.scrollTop</div><div class="line">          &#125;)</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">          <span class="built_in">window</span>.document.body.scrollTop = <span class="number">0</span></div><div class="line">        &#125;</div><div class="line">        <span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, _this.getScrollList, <span class="literal">false</span>)</div><div class="line">        <span class="built_in">window</span>.addEventListener(<span class="string">'touchmove'</span>, _this.whatsTitle, <span class="literal">false</span>)</div><div class="line">        transition.next()</div><div class="line">      &#125;,</div><div class="line">      deactivate (transition) &#123;</div><div class="line">        <span class="keyword">var</span> _this = <span class="keyword">this</span></div><div class="line">        <span class="built_in">window</span>.removeEventListener(<span class="string">'scroll'</span>, _this.getScrollList, <span class="literal">false</span>)</div><div class="line">        <span class="built_in">window</span>.removeEventListener(<span class="string">'touchmove'</span>, _this.whatsTitle, <span class="literal">false</span>)</div><div class="line">        <span class="built_in">window</span>.sessionStorage.scrollTop = <span class="built_in">window</span>.document.body.scrollTop</div><div class="line">        transition.next()</div><div class="line">      &#125;</div><div class="line">    &#125;,</div></pre></td></tr></table></figure>
+<h5 id="homeDefault中的方法"><a href="#homeDefault中的方法" class="headerlink" title="homeDefault中的方法"></a>homeDefault中的方法</h5><p>两个 ajax 通信方法来获取今日日报的数据以及以往日报，控制头部提示的则是<code>whatsTitle</code>方法，利用当前滚动屏幕的高度，来获取一遍当前显示的是什么日期的日报，再利用 vue 中 <code>$dispatch</code> 向子组件派发事件，而<code>getScrollList</code>方法是用来获取你当前滑动了多少距离，当大于整个屏幕的数值时，将继续往下获取数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">methods: &#123;</div><div class="line">      getLatest () &#123;</div><div class="line">        <span class="keyword">let</span> _this = <span class="keyword">this</span></div><div class="line">        _this.loading = <span class="literal">true</span></div><div class="line">        ajax(&#123;</div><div class="line">          url: <span class="string">'http://news-at.zhihu.com/api/4/news/latest'</span>,</div><div class="line">          method: <span class="string">'GET'</span>,</div><div class="line">          callback: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</div><div class="line">            _this.$set(<span class="string">'topStories'</span>, res.top_stories)</div><div class="line">            _this.$set(<span class="string">'allStories'</span>, _this.allStories.concat(res))</div><div class="line">            _this.$set(<span class="string">'date'</span>, res.date)</div><div class="line">            _this.dateArr.push(_this.date)</div><div class="line">            _this.loading = <span class="literal">false</span></div><div class="line">          &#125;</div><div class="line">        &#125;)</div><div class="line">      &#125;,</div><div class="line">      getNews () &#123;</div><div class="line">        <span class="keyword">let</span> _this = <span class="keyword">this</span></div><div class="line">        _this.loading = <span class="literal">true</span></div><div class="line">        ajax(&#123;</div><div class="line">          url: <span class="string">'http://news.at.zhihu.com/api/4/news/before/'</span> + _this.date,</div><div class="line">          <span class="comment">// url: 'http://api.yatessss.com:8888/news-at/api/4/news/before/' + _this.date,</span></div><div class="line">          method: <span class="string">'GET'</span>,</div><div class="line">          callback: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</div><div class="line">            _this.$set(<span class="string">'allStories'</span>, _this.allStories.concat(res))</div><div class="line">            _this.$set(<span class="string">'date'</span>, res.date)</div><div class="line">            _this.dateArr.push(_this.date)</div><div class="line">            _this.loading = <span class="literal">false</span></div><div class="line"><span class="comment">//          console.log(_this.allStories)</span></div><div class="line">          &#125;</div><div class="line">        &#125;)</div><div class="line">      &#125;,</div><div class="line">      getScrollList () &#123;</div><div class="line">        <span class="keyword">var</span> _this = <span class="keyword">this</span></div><div class="line">        <span class="keyword">if</span> ((<span class="built_in">window</span>.document.body.offsetHeight + <span class="built_in">window</span>.document.body.scrollTop) + <span class="number">100</span> &gt; <span class="built_in">window</span>.document.body.scrollHeight &amp;&amp; !_this.loading) &#123;</div><div class="line">          _this.getNews()</div><div class="line">        &#125;</div><div class="line">      &#125;,</div><div class="line">      replace (str) &#123;</div><div class="line">        <span class="keyword">return</span> str.replace(<span class="regexp">/http\w&#123;0,1&#125;:\/\/p/g</span>, <span class="string">'https://images.weserv.nl/?url=p'</span>)</div><div class="line">      &#125;,</div><div class="line">      whatsTitle () &#123;</div><div class="line">        <span class="keyword">let</span> dateArr = <span class="keyword">this</span>.dateArr</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, len = dateArr.length; i &lt; len; i++) &#123;</div><div class="line">          <span class="keyword">let</span> top = <span class="built_in">document</span>.querySelector(<span class="string">'.s-'</span> + 			 dateArr[i]).getBoundingClientRect().top</div><div class="line">          <span class="keyword">if</span> (top &lt; <span class="number">500</span> &amp;&amp; top &gt; <span class="number">100</span>) &#123;</div><div class="line">            <span class="keyword">this</span>.titleTip = dateArr[i - <span class="number">1</span>]</div><div class="line">            <span class="keyword">this</span>.$dispatch(<span class="string">'changeTile'</span>, <span class="keyword">this</span>.titleTip)</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">if</span> (top &lt; <span class="number">100</span> &amp;&amp; top &gt; <span class="number">-400</span>) &#123;</div><div class="line">            <span class="keyword">this</span>.titleTip = dateArr[i]</div><div class="line">            <span class="keyword">this</span>.$dispatch(<span class="string">'changeTile'</span>, <span class="keyword">this</span>.titleTip)</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>对于其中的ajax用的是<a href="https://github.com/vuejs/vue-resource" target="_blank" rel="external">Vue-resource</a>里封装的ajax方法。</p>
+<h2 id="Vue中的过滤器"><a href="#Vue中的过滤器" class="headerlink" title="Vue中的过滤器"></a>Vue中的过滤器</h2><p>由于项目的首页中每个列表滚动时 上方会显示时间以及每天的日报也会有时间提示星期几，所以用到了过滤器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> dateTime = (str) =&gt; &#123;</div><div class="line">  <span class="keyword">let</span> year = str.slice(<span class="number">0</span>, <span class="number">4</span>)</div><div class="line">  <span class="keyword">let</span> month = str.slice(<span class="number">4</span>, <span class="number">6</span>)</div><div class="line">  <span class="keyword">let</span> day = str.slice(<span class="number">6</span>, <span class="number">8</span>)</div><div class="line">  <span class="keyword">let</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">  <span class="keyword">let</span> dateArr = [year, month, day]</div><div class="line">  <span class="keyword">let</span> date = dateArr.join(<span class="string">'/'</span>)</div><div class="line">  <span class="keyword">let</span> index = <span class="keyword">new</span> <span class="built_in">Date</span>(date).getDay() </div><div class="line">  <span class="keyword">let</span> week = [<span class="string">'星期日'</span>, <span class="string">'星期一'</span>, <span class="string">'星期二'</span>, <span class="string">'星期三'</span>, <span class="string">'星期四'</span>, <span class="string">'星期五'</span>, <span class="string">'星期六'</span>][index]</div><div class="line">  <span class="keyword">let</span> nowdate = [now.getFullYear(), <span class="string">'0'</span> + (now.getMonth() + <span class="number">1</span>), now.getDate()] <span class="comment">// 获取今天的日期，用于比较是否是当天</span></div><div class="line">  <span class="keyword">let</span> nd = nowdate.join(<span class="string">''</span>)</div><div class="line">  <span class="comment">// 判断返回字段</span></div><div class="line">  <span class="keyword">let</span> dt = dateArr.join(<span class="string">''</span>)</div><div class="line">  <span class="keyword">if</span> (dt === nd) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'今日热闻'</span></div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> month + <span class="string">'月'</span> + day + <span class="string">'日 '</span> + week</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>评论列表下面也会有时间戳提示，当然这个时间戳的实现（不是我写得 = = 嘿嘿，学习一下）:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> formatTime = (timeStamp, fmt) =&gt; &#123; <span class="comment">// author: meizz</span></div><div class="line">  <span class="keyword">if</span> (!timeStamp) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">''</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> _timeStamp = <span class="built_in">parseInt</span>(timeStamp)</div><div class="line">  <span class="keyword">if</span> (_timeStamp.toString().length === <span class="number">10</span>) &#123;</div><div class="line">    _timeStamp *= <span class="number">1000</span></div><div class="line">  &#125;</div><div class="line">  !fmt &amp;&amp; (fmt = <span class="string">'yyyy-MM-dd'</span>)</div><div class="line"></div><div class="line">  <span class="keyword">var</span> t = <span class="keyword">new</span> <span class="built_in">Date</span>(_timeStamp)</div><div class="line"></div><div class="line">  <span class="keyword">var</span> o = &#123;</div><div class="line">    <span class="string">'M+'</span>: t.getMonth() + <span class="number">1</span>, <span class="comment">// 月份</span></div><div class="line">    <span class="string">'d+'</span>: t.getDate(),      <span class="comment">// 日</span></div><div class="line">    <span class="string">'h+'</span>: t.getHours(),     <span class="comment">// 小时</span></div><div class="line">    <span class="string">'m+'</span>: t.getMinutes(),   <span class="comment">// 分</span></div><div class="line">    <span class="string">'s+'</span>: t.getSeconds(),   <span class="comment">// 秒</span></div><div class="line">    <span class="string">'q+'</span>: <span class="built_in">Math</span>.floor((t.getMonth() + <span class="number">3</span>) / <span class="number">3</span>), <span class="comment">// 季度</span></div><div class="line">    <span class="string">'S'</span>: t.getMilliseconds() <span class="comment">// 毫秒</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (<span class="regexp">/(y+)/</span>.test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (t.getFullYear() + <span class="string">''</span>).substr(<span class="number">4</span> - <span class="built_in">RegExp</span>.$<span class="number">1.</span>length))</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> o) &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'('</span> + k + <span class="string">')'</span>).test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="built_in">RegExp</span>.$<span class="number">1.</span>length === <span class="number">1</span>) ? (o[k]) : ((<span class="string">'00'</span> + o[k]).substr((<span class="string">''</span> + o[k]).length)))</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> fmt</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="项目中的跨域"><a href="#项目中的跨域" class="headerlink" title="项目中的跨域"></a>项目中的跨域</h2><p>这次项目因为要获取知乎日报提供的接口Api，可局限于同源政策，需要解决其中的跨域问题，学生党没有钱去买服务器，所以在获取知乎日报接口这方面，下了一个Chrome插件 Allow-Control-Allow-Origin来解决其中的跨域问题。</p>
+<p>附赠知乎Api接口 <a href="https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90" target="_blank" rel="external">知乎Api</a></p>
+<h2 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h2><p>呼~~这个Vue的项目总算是完成了，期间遇到了很多坑，主要在于其莫名其妙的报错，大概是因为自己的能力还不够吧，所以遇到问题除了吃不下饭，就只剩睡不着觉了，最后解决的方法也是奇形怪状的，不过对于能做出这个Vue项目来，还是值得肯定的，接下来会将以前学的知识做做整理，并为求职做最后的准备吧，工作之后，若有余力，将会尝试React这个国外大火但国内反响平平的框架，不能再想了，怕自己现在就忍不住去学了 ~(&gt;_&lt;)~，好想学新知识啊啊啊啊啊。。。</p>
+<p>最后再唠叨一句，这个项目由于不需要监控组件和数据的状态，所以项目未能用到Vuex，有点遗憾，其实我还是挺期待Vuex+Vue-router+Vue构建出一个单页应用的，希望下一个项目能用上吧，学习之路还很长，加油！</p>
+
+
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="2016/08/23/zhihudaily/"
+                    data-title="Vue+Vue-router知乎日报总结 "
+                    data-url="https://dxilin.github.io/2016/08/23/zhihudaily/"
+                    data-images="https://dxilin.github.io/2016/08/23/zhihudaily/wallhaven-113384.jpg"
+                    data-content="Architecture很久之前就听基友在吐槽，Vue比React好用太多太多啦之类的（直到现... | Dxl的博客 | Dxl&#39;s Blog " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/08/29/Vue.js--60/" data-toggle="tooltip" data-placement="top" title="Vue.js 60分钟入门到... ">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/08/20/design/" data-toggle="tooltip" data-placement="top" title="JavaScript设计者模式 ">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="2016/08/23/zhihudaily/"
+                        data-title="Vue+Vue-router知乎日报总结 "
+                        data-url="https://dxilin.github.io/2016/08/23/zhihudaily/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container" style="position: fixed; right: 0px; top: 25%; visibility:hidden">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Vue" title="Vue">Vue</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+<script>
+  window.onload = function() {
+    if(document.querySelector('.catalog-container'))
+    window.addEventListener('scroll', showCatalog, false)
+  }
+  function showCatalog() {
+    var catelog = document.querySelector('.catalog-container')
+    if(document.body.scrollTop > 600) {
+      catelog.style.visibility = 'visible'
+    } else {
+      catelog.style.visibility = 'hidden'
+    }
+  }
+</script>
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'dingxl';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dingxilin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dxilin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/dxil">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    &copy; 2016
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                    <a href="http://weibo.com/dxilin">Dxl</a>
+                    <br text-muted>
+                    Generated by <a href="https://hexo.io/">Hexo</a>
+                    theme<a href="https://github.com/Huxpro"> Hux</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dxilin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '21d08e93708e8937c1fec56d05d8a023';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

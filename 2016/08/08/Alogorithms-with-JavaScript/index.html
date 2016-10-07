@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dxl的博客">
+    <meta name="keyword"  content="Dxl博客 丁玺霖">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Alogorithms-with-JavaScript - Dxl的博客 | Dxl&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://dxilin.github.io/2016/08/08/Alogorithms-with-JavaScript/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">dxl&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://dxilin.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('javascript.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                        
+                    </div>
+                    <h1>Alogorithms-with-JavaScript</h1>
+                    <h2 class="subheading">&quot;基于javascript的排序算法&quot;</h2>
+                    <span class="meta">
+                        Posted by dxl on
+                        2016-08-08
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p> 一直以来对排序算法的各种名称和算法的实现就会混淆，终于抽空看了看借来的《数据结构与算法javascript描述》一书，也算是对排序算法有了进一步的理解。</p>
+<h2 id="数组测试对象"><a href="#数组测试对象" class="headerlink" title="数组测试对象"></a>数组测试对象</h2><p>为了完成对排序算法的研究，我们先创建一个数组测试对象用来产生测试数据，该对象封装了一些常规的数组操作函数，代码如下:</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">TestArray</span>(<span class="params">numElements</span>) </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">this</span>.dataStore = [];<span class="comment">//用于存放测试数据的数组</span></div><div class="line">  	<span class="keyword">this</span>.numElements = numElements;<span class="comment">//控制生成多少个数</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>把需要操作的函数添加上去：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">TestArray.prototype = &#123;</div><div class="line">  insert: <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;					</div><div class="line">    	<span class="keyword">this</span>.dataStore.push(element);</div><div class="line">	&#125;,</div><div class="line">  setData: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;                      	<span class="comment">//生成400以内的随机数</span></div><div class="line">      <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.numElements; i++) &#123;		</div><div class="line">        <span class="keyword">this</span>.dataStore[i] = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*(<span class="number">400</span> + <span class="number">1</span>));</div><div class="line">      &#125;</div><div class="line">  &#125;,</div><div class="line">  swap: <span class="function"><span class="keyword">function</span>(<span class="params">arr, index1, index2</span>)</span>&#123;</div><div class="line">      <span class="keyword">var</span> temp = arr[index1];</div><div class="line">      arr[index1] = arr[index2];</div><div class="line">      arr[index2] = temp;	</div><div class="line">  &#125;,</div><div class="line">  toString: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> retstr = <span class="string">""</span>;</div><div class="line">    <span class="keyword">var</span> j = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.dataStore.length; i++) &#123;</div><div class="line">      retstr += <span class="keyword">this</span>.dataStore[i] + <span class="string">" "</span>;	</div><div class="line">      j++;</div><div class="line">      <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp; j % <span class="number">10</span> == <span class="number">0</span>)&#123;</div><div class="line">        retstr += <span class="string">"\n"</span>; <span class="comment">//十个一行</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> retstr;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="三种基本排序算法"><a href="#三种基本排序算法" class="headerlink" title="三种基本排序算法"></a>三种基本排序算法</h2><p>基本排序算法的核心思想是对数据按照一定的顺序重新排列，重新排序时利用了一组嵌套的for循环，外循环遍历数组每一项，内循环则用于比较元素，下面让我们先看最慢的排序算法(= =||)。</p>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>没错，就是冒泡排序，这是最慢的排序，但是。。。是我最喜欢的排序，记得以前大一大二每次课设都会有那么些数组要排序，每次用的就是冒泡，没有特别的原因，就是因为它最容易实现。</p>
+<p>冒泡排序为什么叫冒泡算法呢，主要是因为数据会像泡泡一样从数组的一端冒到另一端，假如一组数据按升序排列，较大的数值会浮到右边，而较小的数会浮到左边，主要还是内层循环会每次比较相邻数值，如果左侧值大于右侧值就会交换数值。</p>
+<p>说的话有点多，还是通过栗子来看看吧，假如有一组数组初始排序为：</p>
+<p>​    E   A   D   B   H</p>
+<p>经过一次排序后，这个列表变为：</p>
+<p>​    A   E   D   B   H</p>
+<p>前两个元素进行了交换，接下来再次排序：</p>
+<p>​    A   D   E   B   H</p>
+<p>第二个和第三个元素交换，继续：</p>
+<p>​    A   D   B   E   H</p>
+<p>第三个和第四个元素进行了交换，最后两个步骤省略（其实从第一个数泡泡到最右边，就会从第二个数的位置开始再进行一次泡泡），得到最终顺序：</p>
+<p>​    A   B   D  E   H</p>
+<p>我们来看看冒泡排序算法的函数部分（我这里把函数添加到了原型链中）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">bubbleSort: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> numElements = <span class="keyword">this</span>.dataStore.length;</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> outter = numElements; outter &gt;= <span class="number">2</span>; --outter)&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> inner = <span class="number">0</span>; inner &lt;= outter - <span class="number">2</span>; inner++)&#123;</div><div class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.dataStore[inner] &gt; <span class="keyword">this</span>.dataStore[inner + <span class="number">1</span>])&#123;</div><div class="line">        <span class="keyword">this</span>.swap(<span class="keyword">this</span>.dataStore, inner, inner + <span class="number">1</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>很简单，也很容易理解，外层循环遍历所有的数，然后内层循环每次和相邻的数比较，每当大于，就交换位置（升序排列的情况下）。</p>
+<p>下面让我们测试下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> numElements = <span class="number">10</span>;</div><div class="line"><span class="keyword">var</span> myNums = <span class="keyword">new</span> TestArray(numElements);</div><div class="line">mynums.setData();</div><div class="line"><span class="built_in">console</span>.log(myNums.toString());</div><div class="line">mynums.bubbleSort();</div><div class="line"><span class="built_in">console</span>.log(myNums.toString());</div></pre></td></tr></table></figure>
+<p>以上代码结果为：</p>
+<p> 。。。。</p>
+<p>不用看了 肯定是排序好了的十个数。</p>
+<p>如果还是不太明白冒泡的过程可以在代码中自行加入断点(toString())函数来查看每个步骤的变化，如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">bubbleSort: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> numElements = <span class="keyword">this</span>.dataStore.length;</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> outter = numElements; outter &gt;= <span class="number">2</span>; --outter)&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> inner = <span class="number">0</span>; inner &lt;= outter - <span class="number">2</span>; inner++)&#123;</div><div class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.dataStore[inner] &gt; <span class="keyword">this</span>.dataStore[inner + <span class="number">1</span>])&#123;</div><div class="line">        <span class="keyword">this</span>.swap(<span class="keyword">this</span>.dataStore, inner, inner + <span class="number">1</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.toString());</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为了更方便观察，我把上面的<code>setData()</code>里的档位调低了 400  —-&gt; 20 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="number">8</span> <span class="number">15</span> <span class="number">0</span> <span class="number">18</span> <span class="number">17</span> <span class="number">14</span> <span class="number">15</span> <span class="number">9</span> <span class="number">4</span> <span class="number">4</span></div><div class="line"><span class="number">8</span> <span class="number">0</span> <span class="number">15</span> <span class="number">17</span> <span class="number">14</span> <span class="number">15</span> <span class="number">9</span> <span class="number">4</span> <span class="number">4</span> <span class="number">18</span> </div><div class="line"><span class="number">0</span> <span class="number">8</span> <span class="number">15</span> <span class="number">14</span> <span class="number">15</span> <span class="number">9</span> <span class="number">4</span> <span class="number">4</span> <span class="number">17</span> <span class="number">18</span></div><div class="line"><span class="number">0</span> <span class="number">8</span> <span class="number">14</span> <span class="number">15</span> <span class="number">9</span> <span class="number">4</span> <span class="number">4</span> <span class="number">15</span> <span class="number">17</span> <span class="number">18</span> </div><div class="line"><span class="number">0</span> <span class="number">8</span> <span class="number">14</span> <span class="number">9</span> <span class="number">4</span> <span class="number">4</span> <span class="number">15</span> <span class="number">15</span> <span class="number">17</span> <span class="number">18</span></div><div class="line"><span class="number">0</span> <span class="number">8</span> <span class="number">9</span> <span class="number">4</span> <span class="number">4</span> <span class="number">14</span> <span class="number">15</span> <span class="number">15</span> <span class="number">17</span> <span class="number">18</span></div><div class="line"><span class="number">0</span> <span class="number">8</span> <span class="number">4</span> <span class="number">4</span> <span class="number">9</span> <span class="number">14</span> <span class="number">15</span> <span class="number">15</span> <span class="number">17</span> <span class="number">18</span></div><div class="line"><span class="number">0</span> <span class="number">4</span> <span class="number">4</span> <span class="number">8</span> <span class="number">9</span> <span class="number">14</span> <span class="number">15</span> <span class="number">15</span> <span class="number">17</span> <span class="number">18</span></div><div class="line"><span class="number">0</span> <span class="number">4</span> <span class="number">4</span> <span class="number">8</span> <span class="number">9</span> <span class="number">14</span> <span class="number">15</span> <span class="number">15</span> <span class="number">17</span> <span class="number">18</span></div><div class="line"><span class="number">0</span> <span class="number">4</span> <span class="number">4</span> <span class="number">8</span> <span class="number">9</span> <span class="number">14</span> <span class="number">15</span> <span class="number">15</span> <span class="number">17</span> <span class="number">18</span></div></pre></td></tr></table></figure>
+<p>冒泡搞定了…</p>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>选择排序我一直认为就是冒泡的cp档，为什么呢，就拿升序的情况来说，冒泡这货把大的数往右边咕噜咕噜冒，选择是找到里面最小的，就换到最左边，也类似冒泡吧，只不过这个人是带传送的，可以直接到第一个位置，然后算法会从第二个数开始，找到最小的就和第二个数换，依次类推，外层循环到了倒数第二个位置的时候所有数就已经排完了。</p>
+<p>还是跟冒泡一样，先来五个字母看看吧（摘自书上的套路）：</p>
+<p>​    E    A    D   H   B</p>
+<p>第一次排序会找到里面的最小值，并和第一个数交换。</p>
+<p>​    A    E    D   H   B</p>
+<p>接下来找后面的数的最小值，并和未排序的数（当前就是除A外的）中的第一个数进行交换。</p>
+<p>​    A    B    D   H   E</p>
+<p>下一次…不用找了，刚好D也在了，最后就是H和E换了。</p>
+<p>​    A    B    D   E   H</p>
+<p>下面是选择排序的代码部分（依旧加在原型链上）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">selectionSort: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> min, temp;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> outter = <span class="number">0</span>; outter &lt;= <span class="keyword">this</span>.dataStore.length<span class="number">-2</span>; outter++) &#123;</div><div class="line">    min = outter;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> inner = outter + <span class="number">1</span>; inner &lt;= <span class="keyword">this</span>.dataStore.length<span class="number">-1</span>; inner++) &#123;</div><div class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.dataStore[inner] &lt; <span class="keyword">this</span>.dataStore[min]) &#123;</div><div class="line">        min = inner;</div><div class="line">      &#125;</div><div class="line">      <span class="comment">//this.swap(this.dataStore,outter,min);  ①</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">this</span>.swap(<span class="keyword">this</span>.dataStore,outter,min); <span class="comment">//每次找到最小值再交换 高性能一书把这段放在了 ① 处个人感觉放上面需要多次调用该函数 造成冗余</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>继续来运行观察下吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="number">4</span> <span class="number">14</span> <span class="number">2</span> <span class="number">13</span> <span class="number">14</span> <span class="number">8</span> <span class="number">17</span> <span class="number">7</span> <span class="number">6</span> <span class="number">8</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">14</span> <span class="number">4</span> <span class="number">13</span> <span class="number">14</span> <span class="number">8</span> <span class="number">17</span> <span class="number">7</span> <span class="number">6</span> <span class="number">8</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">14</span> <span class="number">13</span> <span class="number">14</span> <span class="number">8</span> <span class="number">17</span> <span class="number">7</span> <span class="number">6</span> <span class="number">8</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">13</span> <span class="number">14</span> <span class="number">8</span> <span class="number">17</span> <span class="number">7</span> <span class="number">14</span> <span class="number">8</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">7</span> <span class="number">14</span> <span class="number">8</span> <span class="number">17</span> <span class="number">13</span> <span class="number">14</span> <span class="number">8</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">14</span> <span class="number">17</span> <span class="number">13</span> <span class="number">14</span> <span class="number">8</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">8</span> <span class="number">17</span> <span class="number">13</span> <span class="number">14</span> <span class="number">14</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">8</span> <span class="number">13</span> <span class="number">17</span> <span class="number">14</span> <span class="number">14</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">8</span> <span class="number">13</span> <span class="number">14</span> <span class="number">17</span> <span class="number">14</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">8</span> <span class="number">13</span> <span class="number">14</span> <span class="number">14</span> <span class="number">17</span></div></pre></td></tr></table></figure>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>插入排序怎么说呢，这是最类人化的一种排序了吧，举个栗子，我给你一堆数，算了，接地气点，假设你好朋友看你一直单身就给了你一堆美女的资料，你想从找个身高最高的，你怎么排，大概是从手上拿一份看一眼 155 你扔桌上，再从手上拿一份 157 你就放到 155 右边，再拿个一看，156  你就把之前桌子上摆好的那张 157  往右边一挪，然后放 155 和 157 中间吧…这么排下去，最后就能把美女的资料按身高顺序排好了，这也是插入排序的原理。</p>
+<p>插入排序分两个部分，首先是外循环将数组挨个移动，外循环每执行一次，内循环就要对外循环当前的数先保留个备份，然后再把你手上的数（即未排序的数组），一个个与之前排好的数比较，放入合适的位置。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">insertionSort: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> temp,inner;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> outter = <span class="number">1</span>; outter &lt;= <span class="keyword">this</span>.dataStore.length<span class="number">-1</span>; outter++) &#123;</div><div class="line">    temp = <span class="keyword">this</span>.dataStore[outter];<span class="comment">//(这就是拿在手上的数 先保存好 待会放在他刚好大于的位置的右边)</span></div><div class="line">    inner = outter;<span class="comment">//(inner 其实就是你拿起来的数的位置 进入循环判断   dataStore[inner-1]就相当于你上次刚排完序的新数组的最后一个最大的数)</span></div><div class="line">    <span class="keyword">while</span> (inner &gt; <span class="number">0</span> &amp;&amp; (<span class="keyword">this</span>.dataStore[inner - <span class="number">1</span>] &gt;= temp))&#123;<span class="comment">//这里不用for是因为用while就相当于你只要刚好大于你判断的最大的数你就可以放在右边了不用进入循环 如果小于最大的数就依次进入循环并将数组右移并比对下一个数 直到找到大于比对的数的位置，该位置的后一个就是要放置的数的位置 </span></div><div class="line">      <span class="keyword">this</span>.dataStore[inner] = <span class="keyword">this</span>.dataStore[inner - <span class="number">1</span>];</div><div class="line">      <span class="comment">// i++;</span></div><div class="line">      inner --;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">this</span>.dataStore[inner] = temp;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>老规矩 ，执行下吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="number">19</span> <span class="number">6</span> <span class="number">14</span> <span class="number">14</span> <span class="number">17</span> <span class="number">20</span> <span class="number">11</span> <span class="number">11</span> <span class="number">12</span> <span class="number">2</span>     <span class="comment">//第一个放下去的数是19，后面都是拿在手上的数</span></div><div class="line"></div><div class="line"><span class="number">6</span> <span class="number">19</span> <span class="number">14</span> <span class="number">14</span> <span class="number">17</span> <span class="number">20</span> <span class="number">11</span> <span class="number">11</span> <span class="number">12</span> <span class="number">2</span> 	<span class="comment">//放了个 6 下去  ，后面还是拿了一堆</span></div><div class="line"></div><div class="line"><span class="number">6</span> <span class="number">14</span> <span class="number">19</span> <span class="number">14</span> <span class="number">17</span> <span class="number">20</span> <span class="number">11</span> <span class="number">11</span> <span class="number">12</span> <span class="number">2</span> 	</div><div class="line"></div><div class="line"><span class="number">6</span> <span class="number">14</span> <span class="number">14</span> <span class="number">19</span> <span class="number">17</span> <span class="number">20</span> <span class="number">11</span> <span class="number">11</span> <span class="number">12</span> <span class="number">2</span> </div><div class="line"></div><div class="line"><span class="number">6</span> <span class="number">14</span> <span class="number">14</span> <span class="number">17</span> <span class="number">19</span> <span class="number">20</span> <span class="number">11</span> <span class="number">11</span> <span class="number">12</span> <span class="number">2</span> 	<span class="comment">//这一段配合while那 很容易知道 只要比上一个大就可以直接放了</span></div><div class="line"></div><div class="line"><span class="number">6</span> <span class="number">14</span> <span class="number">14</span> <span class="number">17</span> <span class="number">19</span> <span class="number">20</span> <span class="number">11</span> <span class="number">11</span> <span class="number">12</span> <span class="number">2</span></div><div class="line"></div><div class="line"><span class="number">6</span> <span class="number">11</span> <span class="number">14</span> <span class="number">14</span> <span class="number">17</span> <span class="number">19</span> <span class="number">20</span> <span class="number">11</span> <span class="number">12</span> <span class="number">2</span> </div><div class="line"></div><div class="line"><span class="number">6</span> <span class="number">11</span> <span class="number">11</span> <span class="number">14</span> <span class="number">14</span> <span class="number">17</span> <span class="number">19</span> <span class="number">20</span> <span class="number">12</span> <span class="number">2</span> </div><div class="line"></div><div class="line"><span class="number">6</span> <span class="number">11</span> <span class="number">11</span> <span class="number">12</span> <span class="number">14</span> <span class="number">14</span> <span class="number">17</span> <span class="number">19</span> <span class="number">20</span> <span class="number">2</span> </div><div class="line"></div><div class="line"><span class="number">2</span> <span class="number">6</span> <span class="number">11</span> <span class="number">11</span> <span class="number">12</span> <span class="number">14</span> <span class="number">14</span> <span class="number">17</span> <span class="number">19</span> <span class="number">20</span></div></pre></td></tr></table></figure>
+<h3 id="三种基本排序算法的比较"><a href="#三种基本排序算法的比较" class="headerlink" title="三种基本排序算法的比较"></a>三种基本排序算法的比较</h3><p>这三种排序算法的复杂度其实半斤八两，执行效率也差不多，我们可以先通过记下时来对比下三种算法的优劣。</p>
+<p>利用<code>Date</code>构造函数来获取当前时间（毫秒记）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div></pre></td></tr></table></figure>
+<p>以下是我用来测试的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> numElements = <span class="number">50</span>;</div><div class="line"><span class="keyword">var</span> myNums = <span class="keyword">new</span> TestArray(numElements);</div><div class="line">myNums.setData();</div><div class="line"><span class="keyword">var</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line">myNums.selectionSort();</div><div class="line"><span class="keyword">var</span> stop = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line"><span class="keyword">var</span> elapsed = stop - start;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"对"</span>+numElements+<span class="string">"个数字排序,选择排序算法耗时"</span>+elapsed+<span class="string">"毫秒"</span>);</div><div class="line"></div><div class="line">myNums.setData();</div><div class="line">start = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line">myNums.bubbleSort();</div><div class="line">stop = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line">elapsed = stop - start;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"对"</span>+numElements+<span class="string">"个数字排序,冒泡排序算法耗时"</span>+elapsed+<span class="string">"毫秒"</span>);</div><div class="line"></div><div class="line">myNums.setData();</div><div class="line">start = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line">myNums.insertionSort();</div><div class="line">stop = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line">elapsed = stop - start;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"对"</span>+numElements+<span class="string">"个数字排序,插入排序算法耗时"</span>+elapsed+<span class="string">"毫秒"</span>);</div></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">对<span class="number">50</span>个数字排序,选择排序算法耗时<span class="number">0</span>毫秒</div><div class="line">对<span class="number">50</span>个数字排序,冒泡排序算法耗时<span class="number">0</span>毫秒</div><div class="line">对<span class="number">50</span>个数字排序,插入排序算法耗时<span class="number">1</span>毫秒</div></pre></td></tr></table></figure>
+<p>小数据排序，对这些基本排序算法来说都是一样，所以比较不出区别，下面是我测试的一些数据。（以下单位为毫秒）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">随机数</th>
+<th style="text-align:left">50</th>
+<th style="text-align:left">500</th>
+<th style="text-align:left">5000</th>
+<th style="text-align:left">50000</th>
+<th style="text-align:left">100000</th>
+<th style="text-align:left">500000</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">插入排序</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">20</td>
+<td style="text-align:left">1698</td>
+<td style="text-align:left">11682</td>
+<td style="text-align:left">174465</td>
+</tr>
+<tr>
+<td style="text-align:left">冒泡排序</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">62</td>
+<td style="text-align:left">6470</td>
+<td style="text-align:left">42620</td>
+<td style="text-align:left">864418</td>
+</tr>
+<tr>
+<td style="text-align:left">选择排序</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">47</td>
+<td style="text-align:left">4090</td>
+<td style="text-align:left">18895</td>
+<td style="text-align:left">491357</td>
+</tr>
+</tbody>
+</table>
+<p>通过计时可以发现，多一些数据进行基本的算法排序的时候，可以看出，冒泡是最慢的算法（等的那个苦啊，800000毫秒 十四分钟啊。。。导致我那时候差点就忘了这茬了），而插入算法在基本算法里用时是最短的。</p>
+<p>不过，我们也可以很容易的看出仅仅是50万的数据，基本算法就已经不够看了，耗时十分长，所以为了再深入下，以便以后大量数据排序的时候能撑下，我又去了解了一个高级排序算法，因为时间原因，我只看了其中我最喜欢的一个算法，没猜错。。它就是处理大量数据时平均用时最短的算法，江湖人称—-快排。</p>
+<h2 id="高级排序算法"><a href="#高级排序算法" class="headerlink" title="高级排序算法"></a>高级排序算法</h2><p>高级排序就不是满足于上百上千的数据了， 一般都是十万百万以上的数据，而高级排序算法的话也有很多，比如希尔排序、归并排序和堆排序以及快速排序。</p>
+<h3 id="传说中的快排"><a href="#传说中的快排" class="headerlink" title="传说中的快排"></a>传说中的快排</h3><p>前面说过，快排是处理大量数据平均用时最短的算法，它是一种分而治之的算法，通过递归方式将数据分为两个数组，然后再反复调用自身，直到排好序。</p>
+<p>还是用点非官方的话吧，简单说，就是你拿了一堆数，不管三七二十一，你就拿这堆数的第一个作为对比的数 <code>privot</code> ，大于这个数的站他右边，小于这个数的站他左边，这样一想，你是不是分为两个部分了，一个是大于他的数组，一个是小于他的数组？这就好办了，这两个数组是不是也未排序？对嘛，那你可以把这两个数组也用这个方法啊，再把小于他的数组中，拿第一个过来分队，又是两个数组，又调用，这么反复调用，就是递归，同时当没有数组可以排了，所有数就已经排序好了。</p>
+<p>如果没听懂，那还是用代码来表示吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">qSort</span>(<span class="params">list</span>) </span>&#123;</div><div class="line">	<span class="keyword">if</span>(list.length == <span class="number">0</span> ) &#123;</div><div class="line">		<span class="keyword">return</span> [];</div><div class="line">	&#125;</div><div class="line"> 	<span class="keyword">var</span> lesser = [];								<span class="comment">//小于基准值所在的数组</span></div><div class="line">	<span class="keyword">var</span> greater = [];								<span class="comment">//大于基准值所在的数组</span></div><div class="line">	<span class="keyword">var</span> pivot = list[<span class="number">0</span>];							<span class="comment">//当前数组的第一个数作为基准值</span></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; list.length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (list[i] &lt; pivot)&#123;</div><div class="line">			lesser.push(list[i]);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			greater.push(list[i]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> qSort(lesser).concat(pivot,qSort(greater));<span class="comment">//递归调用自身</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看出，快排的核心还是在于递归调用本身，达到快速排序的目的，不过前面一直提，快速排序是大量数据平时用时数据最快的，那对于少量数据以及大量数据的排序有多快呢，我们用计时来比对一下。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">50</th>
+<th style="text-align:left">500</th>
+<th style="text-align:left">5000</th>
+<th style="text-align:left">50000</th>
+<th style="text-align:left">100000</th>
+<th style="text-align:left">500000</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">快速排序</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">36</td>
+<td style="text-align:left">269</td>
+<td style="text-align:left">792</td>
+<td style="text-align:left">13513</td>
+</tr>
+</tbody>
+</table>
+<p>对于小数据排序的话，什么算法其实就不重要了，对计算机运行速度可以忽略不计，但是对于500000数据，快排是插入排序的10多倍，是选择算法的30多倍，是冒泡算法的。。60多倍。就可以知道期间的差距了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实数据结构博大精深（主要还是人类的智慧是无穷的 = =），快排来说也是有很多变种的，比如随机化快排，平衡快排，外部快排之类的，由于我也是刚好遇到排序的问题，再加上时间原因，就看了几个简单好理解的排序算法来方便以后应急用，不过有感兴趣的算法朋友可以度娘搜索一下别的算法学习（ = =||），以后有时间我肯定也会继续学习这门高深的算法的。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
+<p>Michael Mcmillan.<strong>Date Structures &amp; Algorithms with JavaScript</strong> [M].王群锋 杜欢译  </p>
+</blockquote>
+
+
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="2016/08/08/Alogorithms-with-JavaScript/"
+                    data-title="Alogorithms-with-JavaScript"
+                    data-url="https://dxilin.github.io/2016/08/08/Alogorithms-with-JavaScript/"
+                    data-images="https://dxilin.github.io/2016/08/08/Alogorithms-with-JavaScript/javascript.jpg"
+                    data-content=" 一直以来对排序算法的各种名称和算法的实现就会混淆，终于抽空看了看借来的《数据结构与算法jav... | Dxl的博客 | Dxl&#39;s Blog " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/08/10/busy-life/" data-toggle="tooltip" data-placement="top" title="Busy Life">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2015/08/10/Bootstrap/" data-toggle="tooltip" data-placement="top" title="Responsive-Layout And Navbar Design Base on Bootstrap ">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="2016/08/08/Alogorithms-with-JavaScript/"
+                        data-title="Alogorithms-with-JavaScript"
+                        data-url="https://dxilin.github.io/2016/08/08/Alogorithms-with-JavaScript/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container" style="position: fixed; right: 0px; top: 25%; visibility:hidden">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+<script>
+  window.onload = function() {
+    if(document.querySelector('.catalog-container'))
+    window.addEventListener('scroll', showCatalog, false)
+  }
+  function showCatalog() {
+    var catelog = document.querySelector('.catalog-container')
+    if(document.body.scrollTop > 600) {
+      catelog.style.visibility = 'visible'
+    } else {
+      catelog.style.visibility = 'hidden'
+    }
+  }
+</script>
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'dingxl';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dingxilin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dxilin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/dxil">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    &copy; 2016
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                    <a href="http://weibo.com/dxilin">Dxl</a>
+                    <br text-muted>
+                    Generated by <a href="https://hexo.io/">Hexo</a>
+                    theme<a href="https://github.com/Huxpro"> Hux</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dxilin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '21d08e93708e8937c1fec56d05d8a023';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

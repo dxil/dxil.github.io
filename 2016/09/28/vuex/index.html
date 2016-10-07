@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dxl的博客">
+    <meta name="keyword"  content="Dxl博客 丁玺霖">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Vue + Vuex 构建SPA应用...  - Dxl的博客 | Dxl&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://dxilin.github.io/2016/09/28/vuex/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">dxl&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://dxilin.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('bgimg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Vue" title="Vue">Vue</a>
+                        
+                    </div>
+                    <h1>Vue + Vuex 构建SPA应用... </h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by dxl on
+                        2016-09-28
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <blockquote>
+<p>原文地址： <a href="https://coligo.io/learn-vuex-by-building-notes-app/" target="_blank" rel="external">https://coligo.io/learn-vuex-by-building-notes-app</a></p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在最近学习 Vue.js 的时候，看到国外一篇讲述了如何使用 Vue.js 和 Vuex 来构建一个简单笔记的单页应用的文章。感觉收获挺多，自己在它的例子的基础上进行了一些优化和自定义功能，在这里和大家分享下学习心得。</p>
+<p>在这篇教程中我们将通过构建一个笔记应用来学习如何在我们的 Vue 项目中使用 Vuex。我们将大概的过一遍什么是 Vuex.js，在项目中什么时候使用它，和如何构建我们的 Vue 应用。</p>
+<p>这里放一张我们项目的预览图片：</p>
+<p><img src="note.png" alt=""></p>
+<p>项目源码: <a href="https://github.com/dxil/vuex-note" target="_blank" rel="external">vuex-notes-app</a></p>
+<p>项目运行: <a href="http://dingxl.com/vuex-note/dist" target="_blank" rel="external">notes-app</a></p>
+<h2 id="主要知识点"><a href="#主要知识点" class="headerlink" title="主要知识点"></a>主要知识点</h2><ul>
+<li><a href="https://github.com/vuejs/vuex/blob/master/docs/zh-cn/intro.md" target="_blank" rel="external">Vuex</a> 状态管理机制的使用</li>
+<li><a href="https://github.com/vuejs/vue/" target="_blank" rel="external">Vue.js</a> 的基础 api</li>
+<li><a href="https://github.com/vuejs/vue-cli" target="_blank" rel="external">Vue-cli</a> 脚手架的安装及使用</li>
+<li><a href="https://github.com/vuejs/vue-router" target="_blank" rel="external">Vue-router</a> 的使用</li>
+<li><a href="http://es6.ruanyifeng.com/" target="_blank" rel="external">ES6</a> 的语法，这里推荐看下阮一峰的入门教程</li>
+</ul>
+<h2 id="Vuex-概述"><a href="#Vuex-概述" class="headerlink" title="Vuex 概述"></a>Vuex 概述</h2><p>在我们迫不及待的开始项目之前，我们最好先花几分钟来了解下 <a href="https://github.com/vuejs/vuex/blob/master/docs/zh-cn/intro.md" target="_blank" rel="external">Vuex</a> 的核心概念</p>
+<p>Vuex 是一个专门为 Vue.js 应用所设计的集中式状态管理架构。它借鉴了 Flux 和 Redux 的设计思想，但简化了概念，并且采用了一种为能更好发挥 Vue.js 数据响应机制而专门设计的实现。</p>
+<p><code>state</code> 这样概念初次接触的时候可能会感觉到有点模糊，简单来说就是将 <code>state</code> 看成我们项目中使用的数据的集合。然后，Vuex 使得 组件本地状态（component local state）和 应用层级状态(application state) 有了一定的差异</p>
+<ul>
+<li>component local state: 该状态表示仅仅在组件内部使用的状态，有点类似通过配置选项传入 Vue 组件内部的意思。</li>
+<li>application level state: 应用层级状态，表示同时被多个组件共享的状态层级。</li>
+</ul>
+<p>假设有这样一个场景：我们有一个父组件，同时包含两个子组件。父组件可以很容易的通过使用 <code>props</code> 属性来向子组件传递数据。</p>
+<p>但是问题来了，当我们的两个子组件如何和对方互相通信的？ 或者子组件如何传递数据给他父组件的？在我们的项目很小的时候，这个两个问题都不会太难，因为我们可以通过事件派发和监听来完成父组件和子组件的通信。</p>
+<p>然而，随着我们项目的增长：</p>
+<ul>
+<li>保持对所有的事件追踪将变得很困难。到底哪个事件是哪个组件派发的，哪个组件该监听哪个事件？</li>
+<li>项目逻辑分散在各个组件当中，很容易导致逻辑的混乱，不利于我们项目的维护。</li>
+<li>父组件将变得和子组件耦合越来越严重，因为它需要明确的派发和监听子组件的某些事件。</li>
+</ul>
+<p>这就是 Vuex 用来解决的问题。 Vuex 的四个核心概念分别是：</p>
+<ul>
+<li>The state tree：Vuex 使用单一状态树，用一个对象就包含了全部的应用层级状态。至此它便作为一个『唯一数据源(SSOT)』而存在。这也意味着，每个应用将仅仅包含一个 store 实例。单状态树让我们能够直接地定位任一特定的状态片段，在调试的过程中也能轻易地取得整个当前应用状态的快照。</li>
+<li>Getters: 用来从 store 获取 Vue 组件数据。</li>
+<li>Mutators: 事件处理器用来驱动状态的变化。</li>
+<li>Actions: 可以给组件使用的函数，以此用来驱动事件处理器 mutations。</li>
+</ul>
+<p>如何你暂时还不太理解这个四个概念，不用着急，我们将在后面的项目实战中详细的解释。</p>
+<p>下面这张图详细的解释了 Vuex 应用中数据的流向（Vuex 官方图）</p>
+<p><img src="vuex.png" alt="vuex"></p>
+<p>简单解释下：</p>
+<p>Vuex 规定，属于应用层级的状态只能通过 Mutation 中的方法来修改，而派发 Mutation 中的事件只能通过 action。</p>
+<p>从左到又，从组件出发，组件中调用 action，在 action 这一层级我们可以和后台数据交互，比如获取初始化的数据源，或者中间数据的过滤等。然后在 action 中去派发 Mutation。Mutation 去触发状态的改变，状态的改变，将触发视图的更新。</p>
+<p><strong>注意事项</strong></p>
+<ul>
+<li>数据流都是单向的。</li>
+<li>组件能够调用 action。</li>
+<li>action 用来派发 Mutation。</li>
+<li>只有 mutation 可以改变状态。</li>
+<li>store 是响应式的，无论 state 什么时候更新，组件都将同步更新。</li>
+</ul>
+<h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>这个应用将使用 <a href="https://webpack.github.io/" target="_blank" rel="external">webpack</a> 来做模块打包，处理和热重启。使用 Vue 官方提供的脚手架 <a href="https://github.com/vuejs/vue-cli" target="_blank" rel="external">vue-cli</a>。</p>
+<h3 id="安装vue-cli"><a href="#安装vue-cli" class="headerlink" title="安装vue-cli"></a>安装vue-cli</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g vue-cli</div></pre></td></tr></table></figure>
+<p>*Node.js &gt;= 4.x,5.x最好</p>
+<h3 id="初始化应用"><a href="#初始化应用" class="headerlink" title="初始化应用"></a>初始化应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vue init webpack vue-notes-app</div><div class="line">cd vue-notes-app</div><div class="line">npm install // 安装依赖包</div><div class="line">npm run dev // 启动服务</div></pre></td></tr></table></figure>
+<p>初始化一个项目名为<code>vue-notes-app</code>的应用，并选择使用 webpack 打包方式。在命令行中按照提示选择初始化配置项。其中在选择 JSLint 校验的时候，推荐选择 <a href="https://github.com/airbnb/javascript" target="_blank" rel="external">AirBNB</a> 规范。</p>
+<p>使用你最喜欢的编辑器打开我们刚刚新建的项目，项目的结构大概如下图：</p>
+<p><img src="code.png" alt="code"></p>
+<ul>
+<li>components/ 文件夹用来存放我们的 Vue 组件</li>
+<li>vuex/ 文件夹存放的是和 Vuex store 相关的东西（state object，actions，mutators)</li>
+<li>build/ 文件是 webpack 的打包编译配置文件</li>
+<li>config/ 文件夹存放的是一些配置项，比如我们服务器访问的端口配置等</li>
+<li>dist/ 该文件夹一开始是不存在，在我们的项目经过 build 之后才会产出</li>
+<li>App.vue 根组件，所有的子组件都将在这里被引用</li>
+<li>index.html 整个项目的入口文件，将会引用我们的根组件 App.vue</li>
+<li>main.js 入口文件的 js 逻辑，在 webpack 打包之后将被注入到 index.html 中</li>
+</ul>
+<h2 id="功能模块"><a href="#功能模块" class="headerlink" title="功能模块"></a>功能模块</h2><ul>
+<li>新增笔记，新增一篇笔记，编辑区显示空的笔记内容</li>
+<li>删除笔记，删除一篇笔记之后，编辑区域显示当前笔记类别的第一项</li>
+<li>笔记列表切换，分为全部笔记和收藏笔记两种，在切换之后，编辑区域显示当前列表的第一条笔记</li>
+<li>收藏笔记，给当前激活的笔记打上收藏的标签</li>
+</ul>
+<h2 id="项目组件划分"><a href="#项目组件划分" class="headerlink" title="项目组件划分"></a>项目组件划分</h2><p>在这个项目中，我们将总共使用四个组件：根组件 App.vue，操作栏组件 Toolbar.vue，别表组件 NotesList.vue，笔记编辑组件 Editor.vue。</p>
+<p><img src="divided.png" alt="divided"></p>
+<h3 id="创建-Vuex-Store"><a href="#创建-Vuex-Store" class="headerlink" title="创建 Vuex Store"></a>创建 Vuex Store</h3><p>按照上面我们列出来的功能模块，我们在 Vuex/ 下面建立一个 store.js 文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">import Vue from &apos;vue&apos;;</div><div class="line">import Vuex from &apos;vuex&apos;;</div><div class="line"></div><div class="line">Vue.use(Vuex);</div><div class="line"></div><div class="line">// 需要维护的状态</div><div class="line">const state = &#123;</div><div class="line">  notes: [],</div><div class="line">  activeNote: &#123;&#125;,</div><div class="line">  show: &apos;&apos;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">const mutations = &#123;</div><div class="line">  // 初始化 state</div><div class="line">  INIT_STORE(state, data) &#123;</div><div class="line">    state.notes = data.notes;</div><div class="line">    state.show = data.show;</div><div class="line">    state.activeNote = data.activeNote;</div><div class="line">  &#125;,</div><div class="line">  // 新增笔记</div><div class="line">  NEW_NOTE(state) &#123;</div><div class="line">    const newNote = &#123;</div><div class="line">      id: +new Date(),</div><div class="line">      title: &apos;New note&apos;,</div><div class="line">      content: &apos;&apos;,</div><div class="line">      favorite: false,</div><div class="line">    &#125;;</div><div class="line">    state.notes.push(newNote);</div><div class="line">    state.activeNote = newNote;</div><div class="line">  &#125;,</div><div class="line">  EDIT_NOTE(state, note) &#123;</div><div class="line">    state.activeNote = note;</div><div class="line">    // 修改原始数据</div><div class="line">    for (let i = 0; i &lt; state.notes.length; i++) &#123;</div><div class="line">      if (state.notes[i].id === note.id) &#123;</div><div class="line">        state.notes[i] = note;</div><div class="line">        break;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  // 删除笔记</div><div class="line">  DELETE_NOTE(state) &#123;</div><div class="line">    state.notes.$remove(state.activeNote);</div><div class="line">    state.activeNote = state.notes[0] || &#123;&#125;;</div><div class="line">  &#125;,</div><div class="line">  // 切换笔记的收藏与取消收藏</div><div class="line">  TOGGLE_FAVORITE(state) &#123;</div><div class="line">    state.activeNote.favorite = !state.activeNote.favorite;</div><div class="line">  &#125;,</div><div class="line">  // 切换显示数据列表类型：全部 or 收藏</div><div class="line">  SET_SHOW_ALL(state, show) &#123;</div><div class="line">    state.show = show;</div><div class="line">    // 切换数据展示，需要同步更新 activeNote</div><div class="line">    if (show === &apos;favorite&apos;) &#123;</div><div class="line">      state.activeNote = state.notes.filter(note =&gt; note.favorite)[0] || &#123;&#125;;</div><div class="line">    &#125; else &#123;</div><div class="line">      state.activeNote = state.notes[0] || &#123;&#125;;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  // 设置当前激活的笔记</div><div class="line">  SET_ACTIVE_NOTE(state, note) &#123;</div><div class="line">    state.activeNote = note;</div><div class="line">  &#125;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">export default new Vuex.Store(&#123;</div><div class="line">  state,</div><div class="line">  mutations,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="创建-Vuex-Actions"><a href="#创建-Vuex-Actions" class="headerlink" title="创建 Vuex Actions"></a>创建 Vuex Actions</h3><p>在 Vuex/ 下面建立一个 action.js，用来给组件使用的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">// 用于派发指定事件</div><div class="line">function makeAction(type) &#123;</div><div class="line">  return (&#123; dispatch &#125;, ...args) =&gt; dispatch(type, ...args);</div><div class="line">&#125;</div><div class="line"></div><div class="line">const initNote = &#123;</div><div class="line">  id: +new Date(),</div><div class="line">  title: &apos;我的笔记&apos;,</div><div class="line">  content: &apos;第一篇笔记内容&apos;,</div><div class="line">  favorite: false,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">// 模拟初始化数据</div><div class="line">const initData = &#123;</div><div class="line">  show: &apos;all&apos;,</div><div class="line">  notes: [initNote],</div><div class="line">  activeNote: initNote,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">export const initStore = (&#123; dispatch &#125;) =&gt; &#123;</div><div class="line">  dispatch(&apos;INIT_STORE&apos;, initData);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">// 更新当前activeNote对象</div><div class="line">export const updateActiveNote = makeAction(&apos;SET_ACTIVE_NOTE&apos;);</div><div class="line"></div><div class="line">// 添加一个note对象</div><div class="line">export const newNote = makeAction(&apos;NEW_NOTE&apos;);</div><div class="line"></div><div class="line">// 删除一个note对象</div><div class="line">export const deleteNote = makeAction(&apos;DELETE_NOTE&apos;);</div><div class="line"></div><div class="line">export const toggleFavorite = makeAction(&apos;TOGGLE_FAVORITE&apos;);</div><div class="line">export const editNote = makeAction(&apos;EDIT_NOTE&apos;);</div><div class="line"></div><div class="line">// 更新列表展示</div><div class="line">export const updateShow = makeAction(&apos;SET_SHOW_ALL&apos;);</div></pre></td></tr></table></figure>
+<h3 id="创建-Vuex-Getters"><a href="#创建-Vuex-Getters" class="headerlink" title="创建 Vuex Getters"></a>创建 Vuex Getters</h3><p>在 vuex/ 下面建立一个 getter.js 文件，用来从 store 获取数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// 获取 noteList , 这里将会根据state.show 的状态做数据过滤</div><div class="line">export const filteredNotes = (state) =&gt; &#123; // eslint-disable-line</div><div class="line">  if (state.show === &apos;all&apos;) &#123;</div><div class="line">    return state.notes || &#123;&#125;;</div><div class="line">  &#125; else if (state.show === &apos;favorite&apos;) &#123;</div><div class="line">    return state.notes.filter(note =&gt; note.favorite) || &#123;&#125;;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">// 获取列表的展示状态 all or favorite</div><div class="line">export const show = (state) =&gt; state.show;</div><div class="line"></div><div class="line">// 获取当前激活 Note</div><div class="line">export const activeNote = (state) =&gt; state.activeNote;</div></pre></td></tr></table></figure>
+<p>以上就是我们 Vuex 的所有逻辑了，在定下了我们需要完成的功能之后，接下来就是只需要在组件中去调用 action 来实现对应的功能了。</p>
+<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>在这里我们将使用 vue-router 来做路由，引用 bootstrap 样式。</p>
+<p><strong>index.html</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;utf-8&quot;&gt;</div><div class="line">    &lt;title&gt;vue-note&lt;/title&gt;</div><div class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot;&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;!-- built files will be auto injected --&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>所有的入口逻辑我们都将在 main.js 中编写</p>
+<p><strong>main.js</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import Vue from &apos;vue&apos;;</div><div class="line">import App from &apos;./App&apos;;</div><div class="line"></div><div class="line">import VueRouter from &apos;vue-router&apos;;</div><div class="line">import VueResource from &apos;vue-resource&apos;;</div><div class="line"></div><div class="line">// 路由模块和http模块</div><div class="line">Vue.use(VueResource);</div><div class="line">Vue.use(VueRouter);</div><div class="line"></div><div class="line">const router = new VueRouter();</div><div class="line"></div><div class="line">router.map(&#123;</div><div class="line">  &apos;/index&apos;: &#123;</div><div class="line">    component: App,</div><div class="line">  &#125;,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">router.redirect(&#123;</div><div class="line">  &apos;*&apos;: &apos;/index&apos;,</div><div class="line">&#125;);</div><div class="line">/* eslint-disable no-new */</div><div class="line">router.start(App, &apos;#app&apos;);</div></pre></td></tr></table></figure>
+<h3 id="根组件-App-vue"><a href="#根组件-App-vue" class="headerlink" title="根组件 App.vue"></a>根组件 App.vue</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">  &lt;div id=&quot;app&quot; class=&quot;app&quot;&gt;</div><div class="line">    &lt;tool-bar&gt;&lt;/tool-bar&gt;</div><div class="line">    &lt;notes-list&gt;&lt;/notes-list&gt;</div><div class="line">    &lt;editor&gt;&lt;/editor&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">  import ToolBar from &apos;./components/ToolBar&apos;;</div><div class="line">  import NotesList from &apos;./components/NotesList&apos;;</div><div class="line">  import Editor from &apos;./components/Editor&apos;;</div><div class="line">  import store from &apos;./vuex/store&apos;;</div><div class="line">  import &#123; initStore &#125; from &apos;./vuex/actions&apos;;</div><div class="line"></div><div class="line">  export default &#123;</div><div class="line">    components: &#123;</div><div class="line">      ToolBar,</div><div class="line">      NotesList,</div><div class="line">      Editor,</div><div class="line">    &#125;,</div><div class="line">    store,</div><div class="line">    vuex: &#123;</div><div class="line">      actions: &#123;</div><div class="line">        initStore,</div><div class="line">      &#125;,</div><div class="line">    &#125;,</div><div class="line">    ready() &#123;</div><div class="line">      this.initStore();</div><div class="line">    &#125;,</div><div class="line">  &#125;;</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;style&gt;</div><div class="line">  html, #app &#123;</div><div class="line">    height: 100%;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  body &#123;</div><div class="line">    margin: 0;</div><div class="line">    padding: 0;</div><div class="line">    border: 0;</div><div class="line">    height: 100%;</div><div class="line">    max-height: 100%;</div><div class="line">    position: relative;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure>
+<p>在根组件中引用了三个子组件：Toolbar.vue, NotesList.vue, Editor.vue。</p>
+<p>注意：我们在配置里面加入了 <code>vuex</code> 这么一个选项，这里用来将我们 action 里面定义的方法给暴露出来，我们在根组件中只做了一件事情，那就是初始化模拟数据，因此我们在组件生命周期的 ready 阶段调用了 actions 里面的 initStore 来初始化我们的 store 里面的 state</p>
+<h3 id="Toolbar-vue"><a href="#Toolbar-vue" class="headerlink" title="Toolbar.vue"></a>Toolbar.vue</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&lt;template &gt;</div><div class="line">  &lt;div id=&quot;toolbar&quot;&gt;</div><div class="line">    &lt;i class=&quot;glyphicon logo&quot;&gt;&lt;img src=&quot;../assets/logo.png&quot; width=&quot;30&quot; height=&quot;30&quot; alt=&quot;&quot; /&gt;&lt;/i&gt;</div><div class="line">    &lt;i @click=&quot;newNote&quot; class=&quot;glyphicon glyphicon-plus&quot;&gt;&lt;/i&gt;</div><div class="line">    &lt;i @click=&quot;toggleFavorite&quot; class=&quot;glyphicon glyphicon-star&quot; :class=&quot;&#123;stared: activeNote.favorite&#125;&quot;&gt;&lt;/i&gt;</div><div class="line">    &lt;i @click=&quot;deleteNote&quot; class=&quot;glyphicon glyphicon-remove&quot;&gt;&lt;/i&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">  import &#123; newNote, deleteNote, toggleFavorite &#125; from &apos;../vuex/actions&apos;;</div><div class="line">  import &#123; activeNote &#125; from &apos;../vuex/getters&apos;;</div><div class="line">  export default &#123;</div><div class="line">    vuex: &#123;</div><div class="line">      getters: &#123;</div><div class="line">        activeNote,</div><div class="line">      &#125;,</div><div class="line">      actions: &#123;</div><div class="line">        newNote,</div><div class="line">        deleteNote,</div><div class="line">        toggleFavorite,</div><div class="line">      &#125;,</div><div class="line">    &#125;,</div><div class="line">  &#125;;</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;style lang=&quot;scss&quot; scoped&gt;</div><div class="line">  #toolbar &#123;</div><div class="line">    float: left;</div><div class="line">    width: 80px;</div><div class="line">    height: 100%;</div><div class="line">    background-color: #304140;</div><div class="line">    color: #767676;</div><div class="line">    padding: 35px 25px 25px 25px;</div><div class="line"></div><div class="line">    .stared &#123;</div><div class="line">      color: #f7ae4f;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    i &#123;</div><div class="line">      font-size: 30px;</div><div class="line">      margin-bottom: 35px;</div><div class="line">      cursor: pointer;</div><div class="line">      opacity: 0.8;</div><div class="line">      transition: opacify 0.5s ease;</div><div class="line"></div><div class="line">      &amp;:hover &#123;</div><div class="line">        opacity: 1;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure>
+<p>在这里，我们用到了 Vuex 的一个案例就是我们需要知道当前的激活的笔记是否是收藏类别的，如果是，我们需要高亮收藏按钮，那么如何知道呢？那就是通过 vuex 里面的 getters 获取当前激活的笔记对象，判断它的 favorite 是否为 true。</p>
+<p>始终牢记一个概念，vuex 中数据是单向的，只能从 store 获取，而我们这个例子中的 activeNote 也是始终都在 store.js 中维护的，这样子就可以给其他组件公用了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 需要维护的状态</span></div><div class="line"><span class="keyword">const</span> state = &#123;</div><div class="line">  notes: [],</div><div class="line">  activeNote: &#123;&#125;,</div><div class="line">  show: <span class="string">''</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="NotesList-vue"><a href="#NotesList-vue" class="headerlink" title="NotesList.vue"></a>NotesList.vue</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div></pre></td><td class="code"><pre><div class="line">&lt;template &gt;</div><div class="line">  &lt;div id=&quot;notes-list&quot;&gt;</div><div class="line">    &lt;div id=&quot;list-header&quot;&gt;</div><div class="line">      &lt;h2&gt;Notes | &lt;a href=&quot;http://dingxl.com&quot; target=&quot;_blank&quot;&gt;dingxl.com&lt;/a&gt;&lt;/h2&gt;</div><div class="line">      &lt;div class=&quot;btn-group btn-group-justified&quot; role=&quot;group&quot;&gt;</div><div class="line">        &lt;!-- show all --&gt;</div><div class="line">        &lt;div class=&quot;btn-group&quot; role=&quot;group&quot;&gt;</div><div class="line">          &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot;</div><div class="line">            @click=&quot;toogleShow(&apos;all&apos;)&quot;</div><div class="line">            :class=&quot;&#123;active: show === &apos;all&apos;&#125;&quot;&gt;All Notes</div><div class="line">          &lt;/button&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line"></div><div class="line">        &lt;!-- show favorites  --&gt;</div><div class="line">        &lt;div class=&quot;btn-group&quot; role=&quot;group&quot;&gt;</div><div class="line">          &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot;</div><div class="line">            @click=&quot;toogleShow(&apos;favorite&apos;)&quot;</div><div class="line">            :class=&quot;&#123;active: show === &apos;favorite&apos;&#125;&quot;&gt;Favorite</div><div class="line">          &lt;/button&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line"></div><div class="line">    &lt;!-- 渲染笔记列表 --&gt;</div><div class="line">    &lt;div class=&quot;container&quot;&gt;</div><div class="line">      &lt;div class=&quot;list-group&quot;&gt;</div><div class="line">        &lt;a v-for=&quot;note in filteredNotes&quot;</div><div class="line">          class=&quot;list-group-item&quot; href=&quot;#&quot;</div><div class="line">          :class=&quot;&#123;active: activeNote === note&#125;&quot;</div><div class="line">          @click=&quot;updateActiveNote(note)&quot;&gt;</div><div class="line">          &lt;h4 class=&quot;list-group-item-heading&quot;&gt;</div><div class="line">            &#123;&#123;note.title.trim().substring(0,30)&#125;&#125;</div><div class="line">          &lt;/h4&gt;</div><div class="line">        &lt;/a&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">  import &#123; updateActiveNote, updateShow &#125; from &apos;../vuex/actions&apos;;</div><div class="line">  import &#123; show, filteredNotes, activeNote &#125; from &apos;../vuex/getters&apos;;</div><div class="line"></div><div class="line">  export default &#123;</div><div class="line">    vuex: &#123;</div><div class="line">      getters: &#123;</div><div class="line">        show,</div><div class="line">        filteredNotes,</div><div class="line">        activeNote,</div><div class="line">      &#125;,</div><div class="line">      actions: &#123;</div><div class="line">        updateActiveNote,</div><div class="line">        updateShow,</div><div class="line">      &#125;,</div><div class="line">    &#125;,</div><div class="line">    methods: &#123;</div><div class="line">      toogleShow(show) &#123; // eslint-disable-line</div><div class="line">        this.updateShow(show);</div><div class="line">      &#125;,</div><div class="line">    &#125;,</div><div class="line">  &#125;;</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;style lang=&quot;scss&quot; scoped&gt;</div><div class="line">  #notes-list &#123;</div><div class="line">    float: left;</div><div class="line">    width: 300px;</div><div class="line">    height: 100%;</div><div class="line">    background-color: #f5f5f5;</div><div class="line">    font-family: &apos;Raleway&apos;, sans-serif;</div><div class="line">    font-weight: 400;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  #list-header &#123;</div><div class="line">    padding: 5px 25px 25px 25px;</div><div class="line"></div><div class="line">    h2 &#123;</div><div class="line">      font-weight: 300;</div><div class="line">      text-transform: uppercase;</div><div class="line">      text-align: center;</div><div class="line">      font-size: 22px;</div><div class="line">      padding-bottom: 8px;</div><div class="line">    &#125;</div><div class="line">    a &#123;</div><div class="line">      text-decoration: none;</div><div class="line">      color: inherit;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  #notes-list .container &#123;</div><div class="line">    height: calc(100% - 137px);</div><div class="line">          max-height: calc(100% - 137px);</div><div class="line">          overflow: hidden;</div><div class="line">    width: 100%;</div><div class="line">    padding: 0;</div><div class="line"></div><div class="line">    .list-group-item &#123;</div><div class="line">      border: 0;</div><div class="line">      border-radius: 0;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  .list-group-item-heading &#123;</div><div class="line">    font-weight: 300;</div><div class="line">    font-size: 15px;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure>
+<p>笔记列表组件，主要有三个操作</p>
+<ul>
+<li>渲染笔记</li>
+<li>切换渲染笔记</li>
+<li>点击列表 title，切换 activeNote</li>
+</ul>
+<p>我们通过 getters 中的 filteredNotes 方法获取笔记列表</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取 noteList,这里将会根据 state.show 的状态做数据过滤</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> filteredNotes = (state) =&gt; &#123;</div><div class="line">  <span class="keyword">if</span>(state.show === <span class="string">'all'</span>)&#123;</div><div class="line">    <span class="keyword">return</span> state.notes || &#123;&#125;;</div><div class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(state.show === <span class="string">'favorite'</span>)&#123;</div><div class="line">    <span class="keyword">return</span> state.notes.filter(note =&gt; note.favorite) || &#123;&#125;;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>可以看到，我们获取的列表是依赖于 state.show 这个状态的。而我们的切换列表操作恰好就是调用 actions 里面的方法来更新 state.show ，这样一来，实现了数据列表的动态刷新，而且我们对树的操作都是通过调用 actions 的方法来实现的。</p>
+<p>我们再看，在切换列表的时候，我们还需要动态的更新 activeNote 。 看看我们在 store.js 中是如何做的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 切换显示数据列表类型：全部 or 收藏</span></div><div class="line">SET_SHOW_ALL(state, show)&#123;</div><div class="line">  state.show = show;</div><div class="line">  <span class="comment">// 切换数据展示，需要同步更新 activeNote</span></div><div class="line">  <span class="keyword">if</span>(show === <span class="string">'favorite'</span>)&#123;</div><div class="line">    state.activeNote = state.notes.filter(note =&gt; note.favorite)[<span class="number">0</span>] || &#123;&#125;;</div><div class="line">  &#125;<span class="keyword">else</span>&#123;</div><div class="line">    state.activeNote = state.notes[<span class="number">0</span>] || &#123;&#125;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>触发这些操作的是我们给两个按钮分别绑定了我们自定义的函数，通过给函数传入不同的参数，然后调用 actions 里面的方法，来实现对数据的过滤，更新。</p>
+<h3 id="Editor-vue"><a href="#Editor-vue" class="headerlink" title="Editor.vue"></a>Editor.vue</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">  &lt;div id=&quot;note-editor&quot;&gt;</div><div class="line">    &lt;!-- &lt;div class=&quot;form-group&quot;&gt; --&gt;</div><div class="line">      &lt;input type=&quot;text&quot; name=&quot;title&quot;</div><div class="line">        class=&quot;title form-control&quot;</div><div class="line">        placeholder=&quot;请输入标题&quot;</div><div class="line">        @input=&quot;updateNote&quot;</div><div class="line">        v-model=&quot;currentNote.title&quot;&gt;</div><div class="line">      &lt;textarea</div><div class="line">        v-model=&quot;currentNote.content&quot; name=&quot;content&quot;</div><div class="line">        class=&quot;form-control&quot; placeholder=&quot;请输入正文&quot;</div><div class="line">        @input=&quot;updateNote&quot;&gt;&lt;/textarea&gt;</div><div class="line">    &lt;!-- &lt;/div&gt; --&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">  import &#123; editNote &#125; from &apos;../vuex/actions&apos;;</div><div class="line">  import &#123; activeNote &#125; from &apos;../vuex/getters&apos;;</div><div class="line"></div><div class="line">  export default &#123;</div><div class="line">    vuex: &#123;</div><div class="line">      getters: &#123;</div><div class="line">        activeNote,</div><div class="line">      &#125;,</div><div class="line">      actions: &#123;</div><div class="line">        editNote,</div><div class="line">      &#125;,</div><div class="line">    &#125;,</div><div class="line">    computed: &#123;</div><div class="line">      // 通过计算属性得到一个对象，更愉快的使用v-model</div><div class="line">      currentNote: activeNote,</div><div class="line">    &#125;,</div><div class="line">    methods: &#123;</div><div class="line">      // 由于严格模式下不能在模版中直接修改 state中的值，所以间接修改</div><div class="line">      updateNote() &#123;</div><div class="line">        this.editNote(this.currentNote);</div><div class="line">      &#125;,</div><div class="line">    &#125;,</div><div class="line">  &#125;;</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;style lang=&quot;css&quot;&gt;</div><div class="line">  #note-editor &#123;</div><div class="line">    height: 100%;</div><div class="line">    margin-left: 380px;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  #note-editor textarea &#123;</div><div class="line">    height: calc(100% - 34px);</div><div class="line">    border: 0;</div><div class="line">    border-radius: 0;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure>
+<p>在 Editor.vue 组件中，我们需要能够实时的更新当前的 activeNote 组件和列表中对应的我们正在修改的笔记对象的内容。</p>
+<p>由于我们前面提到过，在组件中是不允许直接修改 store.js在里面的状态值的，所以在这里的时候，我们通过一个计算属性，将 store 里面的状态值赋值给一个对象，然后在自定义的 updateNotes() 方法中，去调用 action,同时传入 currentNote 对象。</p>
+<p>在 store.js 中，我们是这么做的，找到对应的 id 的对象，重新赋值，因为前面提到过，我们的数据是响应式的，在这里进行了改变，对应的视图也将刷新改变，这样一来就实现了实时编辑，实时渲染的功能了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 修改笔记</span></div><div class="line">EDIT_NOTE(state, note) &#123;</div><div class="line">  state.activeNote = note;</div><div class="line">  <span class="comment">// 修改原始数据</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; state.notes.length; i++) &#123;</div><div class="line">    <span class="keyword">if</span>(state.notes[i].id === note.id)&#123;</div><div class="line">      state.notes[i] = note;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>在这个项目中，我们并没有引入 vue-resource 插件，只是自己模拟了部分的数据，有兴趣的同学可以自己去试试。</p>
+<p>由于我们的例子相对简单，没有涉及到很深入的东西，更深层次的研究需要大家花更多的时间去实践了。</p>
+<p>最后，再说一句，在 action 里面，我们其实可以做的还有更多，比如根据 id 动态的异步获取笔记内容等等，这些有兴趣的同学可以自己去尝试，一点点的丰富这个例子。</p>
+
+
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="2016/09/28/vuex/"
+                    data-title="Vue + Vuex 构建SPA应用... "
+                    data-url="https://dxilin.github.io/2016/09/28/vuex/"
+                    data-images="https://dxilin.github.io/2016/09/28/vuex/bgimg.jpg"
+                    data-content="
+原文地址： https://coligo.io/learn-vuex-by-building... | Dxl的博客 | Dxl&#39;s Blog " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/08/29/Vue.js--60/" data-toggle="tooltip" data-placement="top" title="Vue.js 60分钟入门到... ">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="2016/09/28/vuex/"
+                        data-title="Vue + Vuex 构建SPA应用... "
+                        data-url="https://dxilin.github.io/2016/09/28/vuex/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container" style="position: fixed; right: 0px; top: 25%; visibility:hidden">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Vue" title="Vue">Vue</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+<script>
+  window.onload = function() {
+    if(document.querySelector('.catalog-container'))
+    window.addEventListener('scroll', showCatalog, false)
+  }
+  function showCatalog() {
+    var catelog = document.querySelector('.catalog-container')
+    if(document.body.scrollTop > 600) {
+      catelog.style.visibility = 'visible'
+    } else {
+      catelog.style.visibility = 'hidden'
+    }
+  }
+</script>
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'dingxl';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dingxilin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/dxilin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/dxil">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    &copy; 2016
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                    <a href="http://weibo.com/dxilin">Dxl</a>
+                    <br text-muted>
+                    Generated by <a href="https://hexo.io/">Hexo</a>
+                    theme<a href="https://github.com/Huxpro"> Hux</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dxilin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '21d08e93708e8937c1fec56d05d8a023';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
